@@ -32,20 +32,21 @@ class _SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        FormHeader(title: const Text('Sign In')),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        StartPadding(child: FormHeader(title: const Text('Sign In'))),
         SignInForm.colDivider,
         const StartPadding(child: InputLabel('Email')),
-        const SizedBox(height: 6),
+        const SizedBox(height: 4),
         const StartPadding(child: MailInput()),
         SignInForm.colDivider,
         const StartPadding(child: InputLabel('Password')),
-        const SizedBox(height: 6),
+        const SizedBox(height: 4),
         const StartPadding(child: PasswordInput()),
         SignInForm.colDivider,
-        const Row(
-          children: [RememberCheckbox(), Spacer(), ForgotPasswordLink()],
-        ),
+        const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          RememberCheckbox(),
+          ForgotPasswordLink(),
+        ]),
         SignInForm.colDivider,
         SignInForm.colDivider,
         StartPadding(child: SubmitButton(status: _status, onPressed: submit)),

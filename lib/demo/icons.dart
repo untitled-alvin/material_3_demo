@@ -17,6 +17,33 @@ enum AIcons {
   googleBold,
   facebookBold,
   appleBold,
+
+  //
+  profileCircleBold,
+
+  //
+  userSquareBold,
+
+  //
+  notificationBold,
+
+  //
+  codeCircleBold,
+
+  //
+  briefcaseBold,
+
+  //
+  arrowRight3,
+
+  //
+  settings4Bold,
+
+  //
+  securitySafeBold,
+
+  //
+  commandSquareBold,
 }
 
 class AppIcon extends StatelessWidget {
@@ -35,10 +62,34 @@ class AppIcon extends StatelessWidget {
       AIcons.lock1Bold => Icon(IconsaxBold.lock_1, size: size),
       //
       AIcons.sms1Bold => Icon(IconsaxBold.sms, size: size),
+
       //
       AIcons.googleBold => Icon(MingCuteIcons.mgc_google_fill, size: size),
       AIcons.facebookBold => Icon(MingCuteIcons.mgc_facebook_fill, size: size),
       AIcons.appleBold => Icon(MingCuteIcons.mgc_apple_fill, size: size),
+
+      //
+      AIcons.profileCircleBold => Icon(IconsaxBold.profile_circle, size: size),
+      //
+      AIcons.userSquareBold => Icon(IconsaxBold.user_square, size: size),
+      //
+      AIcons.notificationBold => Icon(IconsaxBold.notification, size: size),
+      //
+      AIcons.codeCircleBold => Icon(IconsaxBold.code_circle, size: size),
+      //
+      AIcons.briefcaseBold => Icon(IconsaxBold.briefcase, size: size),
+
+      //
+      AIcons.arrowRight3 => Icon(IconsaxOutline.arrow_right_3, size: size),
+
+      //
+      AIcons.settings4Bold => Icon(IconsaxBold.setting_4, size: size),
+
+      //
+      AIcons.securitySafeBold => Icon(IconsaxBold.security_safe, size: size),
+
+      //
+      AIcons.commandSquareBold => Icon(IconsaxBold.command_square, size: size),
     };
   }
 
@@ -47,19 +98,21 @@ class AppIcon extends StatelessWidget {
 }
 
 class Element extends StatelessWidget {
-  const Element({super.key, required this.icon});
+  const Element({super.key, required this.icon, this.tooltip});
 
   final Widget icon;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
     return IconButton.filledTonal(
-      onPressed: () {},
       style: IconButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         iconSize: 20,
         elevation: 2,
       ),
+      onPressed: () {},
+      tooltip: tooltip,
       icon: icon,
     );
   }
@@ -70,15 +123,15 @@ class IconsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       FormHeader(title: const Text('Icons')),
-      const SizedBox(height: 12),
-      Padding(
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
-        child: Wrap(spacing: 16, runSpacing: 16, children: [
-          for (var element in AIcons.values) Element(icon: AppIcon(element)),
-        ]),
-      ),
+      Wrap(spacing: 16, runSpacing: 16, children: [
+        for (var element in AIcons.values)
+          Element(
+            tooltip: element.name,
+            icon: AppIcon(element),
+          ),
+      ]),
     ]);
   }
 }

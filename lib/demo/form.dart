@@ -41,7 +41,7 @@ class MailInput extends StatelessWidget {
       },
       decoration: const InputDecoration(
         prefixIcon: AppIcon(AIcons.sms1Bold, size: 20),
-        filled: true,
+        // filled: true,
         hintText: 'Email Address',
       ),
     );
@@ -69,7 +69,7 @@ class _PasswordInputState extends State<PasswordInput> {
       },
       decoration: InputDecoration(
         hintText: 'Password',
-        filled: true,
+        // filled: true,
         prefixIcon: const AppIcon(AIcons.lock1Bold, size: 20),
         suffixIcon: VisibilityIconButton(
           onPressed: () => setState(() => _visibility = !_visibility),

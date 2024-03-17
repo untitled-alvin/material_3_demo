@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'demo_theme.dart';
+import 'filter_form.dart';
 import 'icons.dart';
+import 'settings_form.dart';
 import 'sign_in_divider.dart';
 import 'sign_in_form.dart';
 import 'sign_in_socials.dart';
@@ -32,16 +34,20 @@ class DemoList1 extends StatelessWidget {
       ),
       colDivider,
       const ComponentDecoration(child: IconsList()),
+      colDivider,
+      const ComponentDecoration(child: SocialsSignIn()),
 
-      // const ComponentDecoration(child: SignInDivider()),
-      // colDivider,
-      // const ComponentDecoration(child: SocialsSignIn()),
+      //
       if (!showSecondList) ...[
         colDivider,
-        const ComponentDecoration(child: SignInDivider()),
+        const ComponentDecoration(child: SettingsForm()),
         colDivider,
-        const ComponentDecoration(child: SocialsSignIn()),
+        const ComponentDecoration(child: FilterForm()),
+        colDivider,
+        const ComponentDecoration(child: SignInDivider()),
       ],
+
+      colDivider,
     ];
     List<double?> heights = List.filled(children.length, null);
 
@@ -80,9 +86,12 @@ class DemoList2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
+      const ComponentDecoration(child: SettingsForm()),
+      colDivider,
+      const ComponentDecoration(child: FilterForm()),
+      colDivider,
       const ComponentDecoration(child: SignInDivider()),
       colDivider,
-      const ComponentDecoration(child: SocialsSignIn()),
     ];
     List<double?> heights = List.filled(children.length, null);
 

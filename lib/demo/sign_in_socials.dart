@@ -6,19 +6,19 @@ class SocialsSignIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(runSpacing: 12, children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       FilledButton.tonalIcon(
         onPressed: () {},
         icon: const Icon(MingCuteIcons.mgc_apple_fill),
         label: const Text('Sign In With Apple'),
       ),
-      const SizedBox(height: 24),
+      const SizedBox(height: 12),
       FilledButton.tonalIcon(
         onPressed: () {},
-        icon: const Icon(MingCuteIcons.mgc_facebook_fill),
+        icon: const Icon(MingCuteIcons.mgc_facebook_fill, color: Colors.blue),
         label: const Text('Sign In With Facebook', maxLines: 1),
       ),
-      const SizedBox(height: 24),
+      const SizedBox(height: 12),
       FilledButton.tonalIcon(
         onPressed: () {},
         icon: const Icon(MingCuteIcons.mgc_google_fill),
