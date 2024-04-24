@@ -31,7 +31,12 @@ class DemoTheme extends StatelessWidget {
         checkboxTheme: CheckboxThemeData(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         ),
+        tabBarTheme: const TabBarTheme(
+          indicatorSize: TabBarIndicatorSize.label,
+          tabAlignment: TabAlignment.start,
+        ),
         cardTheme: const CardTheme(
+          clipBehavior: Clip.hardEdge,
           shadowColor: Colors.transparent,
           margin: EdgeInsets.zero,
         ),

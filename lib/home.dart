@@ -8,7 +8,11 @@ import 'color_palettes_screen.dart';
 import 'component_screen.dart';
 import 'constants.dart';
 import 'elevation_screen.dart';
+import 'token/token_screen.dart';
 import 'typography_screen.dart';
+
+// ignore: directives_ordering
+import 'demo/demo_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -126,6 +130,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ScreenSelected.color => const ColorPalettesScreen(),
         ScreenSelected.typography => const TypographyScreen(),
+        // ScreenSelected.demo => const TokenScreen(),
+        ScreenSelected.demo => Expanded(
+            child: OneTwoTransition(
+              animation: railAnimation,
+              one: DemoList1(
+                  showSecondList: showMediumSizeLayout || showLargeSizeLayout),
+              two: const DemoList2(),
+            ),
+          ),
         ScreenSelected.elevation => const ElevationScreen()
       };
 
@@ -669,7 +682,14 @@ final List<NavigationRailDestination> navRailDestinations = appBarDestinations
         label: Text(destination.label),
       ),
     )
-    .toList();
+    .toList()
+  ..insert(0, loginDes);
+
+const loginDes = NavigationRailDestination(
+  icon: Icon(Icons.rocket_launch_outlined),
+  selectedIcon: Icon(Icons.rocket_launch_rounded),
+  label: Text('Sign In'),
+);
 
 class SizeAnimation extends CurvedAnimation {
   SizeAnimation(Animation<double> parent)

@@ -56,6 +56,7 @@ enum ColorImageProvider {
 }
 
 enum ScreenSelected {
+  demo(4),
   component(0),
   color(1),
   typography(2),
