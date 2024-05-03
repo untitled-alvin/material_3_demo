@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:standard_ui_kit/standard_ui_kit.dart';
 
 import 'form_header.dart';
-import 'icons.dart';
 
 class SettingsForm extends Column {
   const SettingsForm({super.key});
@@ -39,11 +39,11 @@ class PersonalSettings extends StatelessWidget {
   const PersonalSettings({super.key});
 
   static final options = <String, Widget>{
-    'Profile': const AppIcon(AIcons.profileCircleBold),
-    'Account': const AppIcon(AIcons.userSquareBold),
-    'Notifications': const AppIcon(AIcons.notificationBold),
-    'Organizations': const AppIcon(AIcons.briefcaseBold),
-    'Dev Settings': const AppIcon(AIcons.codeCircleBold),
+    'Profile': const Icon(StandardIcons.profile_circle_bold),
+    'Account': const Icon(StandardIcons.user_square_bold),
+    'Notifications': const Icon(StandardIcons.notification_bold),
+    'Organizations': const Icon(StandardIcons.briefcase_bold),
+    'Dev Settings': const Icon(StandardIcons.code_circle_bold),
   };
 
   @override
@@ -55,7 +55,7 @@ class PersonalSettings extends StatelessWidget {
             ListTile(
               onTap: () {},
               leading: element.value,
-              trailing: const AppIcon(AIcons.arrowRight3, size: 16),
+              trailing: const Icon(StandardIcons.arrow_right_3, size: 16),
               title: Text(element.key),
             ),
         ]).toList(),
@@ -68,10 +68,10 @@ class AppSettings extends StatelessWidget {
   const AppSettings({super.key});
 
   static final options = <String, Widget>{
-    'Appearance': const AppIcon(AIcons.settings4Bold),
-    'UX/UI': const AppIcon(AIcons.userSquareBold),
-    'Shortcuts': const AppIcon(AIcons.commandSquareBold),
-    'SSO': const AppIcon(AIcons.securitySafeBold),
+    'Appearance': const Icon(StandardIcons.settings_4_bold),
+    'UX/UI': const Icon(StandardIcons.user_square_bold),
+    'Shortcuts': const Icon(StandardIcons.command_square_bold),
+    'SSO': const Icon(StandardIcons.security_safe_bold),
   };
 
   @override
@@ -108,6 +108,7 @@ class _SwitchTileState extends State<SwitchTile> {
     return ListTile(
       leading: widget.leading,
       trailing: Theme(
+        // ignore: deprecated_member_use
         data: Theme.of(context).copyWith(useMaterial3: false),
         child: Switch(value: _value, onChanged: valueChanged),
       ),
@@ -128,11 +129,11 @@ class _TabsState extends State<Tabs> with TickerProviderStateMixin {
   late TabController _tabController;
 
   static final options = <String, Widget>{
-    'Profile': const AppIcon(AIcons.profileCircleBold),
-    'Account': const AppIcon(AIcons.userSquareBold),
-    'Notifications': const AppIcon(AIcons.notificationBold),
-    'Organizations': const AppIcon(AIcons.briefcaseBold),
-    'Dev Settings': const AppIcon(AIcons.codeCircleBold),
+    'Profile': const Icon(StandardIcons.profile_circle_bold),
+    'Account': const Icon(StandardIcons.user_square_bold),
+    'Notifications': const Icon(StandardIcons.notification_bold),
+    'Organizations': const Icon(StandardIcons.briefcase_bold),
+    'Dev Settings': const Icon(StandardIcons.code_circle_bold),
   };
 
   @override

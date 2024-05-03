@@ -1,19 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'icons.dart';
+import 'package:standard_ui_kit/standard_ui_kit.dart';
 
 class VisibilityIconButton extends IconButton {
-  const VisibilityIconButton({
+  VisibilityIconButton({
     super.key,
     required bool visibility,
     required VoidCallback onPressed,
   }) : super(
           onPressed: onPressed,
-          icon: !visibility
-              ? const AppIcon(AIcons.eyeSlashBold, size: 20)
-              : const AppIcon(AIcons.eyeBold, size: 20),
+          icon: Icon(
+              visibility
+                  ? StandardIcons.eye_bold
+                  : StandardIcons.eye_slash_bold,
+              size: 20),
         );
+
+  // icon: visibility
+  //     ? Lexicon(StandardIcons.eye_bold, size: 20)
+  //     : Lexicon(StandardIcons.eye_slash_bold, size: 20),
 }
 
 class InputLabel extends StatelessWidget {
@@ -40,7 +45,7 @@ class MailInput extends StatelessWidget {
         return null;
       },
       decoration: const InputDecoration(
-        prefixIcon: AppIcon(AIcons.sms1Bold, size: 20),
+        prefixIcon: Icon(StandardIcons.sms1_bold, size: 20),
         // filled: true,
         hintText: 'Email Address',
       ),
@@ -70,7 +75,7 @@ class _PasswordInputState extends State<PasswordInput> {
       decoration: InputDecoration(
         hintText: 'Password',
         // filled: true,
-        prefixIcon: const AppIcon(AIcons.lock1Bold, size: 20),
+        prefixIcon: const Icon(StandardIcons.lock_1_bold, size: 20),
         suffixIcon: VisibilityIconButton(
           onPressed: () => setState(() => _visibility = !_visibility),
           visibility: _visibility,

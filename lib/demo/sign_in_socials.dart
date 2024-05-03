@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ming_cute_icons/ming_cute_icons.dart';
+import 'package:standard_ui_kit/standard_ui_kit.dart';
 
 class SocialsSignIn extends Column {
   const SocialsSignIn({super.key});
@@ -12,19 +12,22 @@ class SocialsSignIn extends Column {
     return [
       FilledButton.tonalIcon(
         onPressed: () {},
-        icon: const Icon(MingCuteIcons.mgc_apple_fill),
+        icon: const Icon(StandardIcons.apple_bold),
+        // icon: const Icon(MingCuteIcons.mgc_apple_fill),
         label: const Text('Sign In With Apple'),
       ),
       const SizedBox(height: 12),
       FilledButton.tonalIcon(
         onPressed: () {},
-        icon: Icon(MingCuteIcons.mgc_facebook_fill, color: Colors.blue[800]),
+        icon: Icon(StandardIcons.facebook_bold, color: Colors.blue[800]),
+        // icon: Icon(MingCuteIcons.mgc_facebook_fill, color: Colors.blue[800]),
         label: const Text('Sign In With Facebook', maxLines: 1),
       ),
       const SizedBox(height: 12),
       FilledButton.tonalIcon(
         onPressed: () {},
-        icon: const Icon(MingCuteIcons.mgc_google_fill),
+        icon: const Icon(StandardIcons.google_bold),
+        // icon: const Icon(MingCuteIcons.mgc_google_fill),
         label: const Text('Sign In With Google'),
       ),
     ];

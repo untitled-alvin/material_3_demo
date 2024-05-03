@@ -2,23 +2,28 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart';
+// import 'package:diversity_avatars/diversity_avatars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
-import 'space.dart';
+import 'package:standard_ui_kit/standard_ui_kit.dart';
 
 class TokenScreen extends StatelessWidget {
   const TokenScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Color shadowColor = Theme.of(context).colorScheme.shadow;
     Color surfaceTint = Theme.of(context).colorScheme.primary;
+    double totalWidth = elevations.map((e) => e.height).reduce((a, b) => a + b);
 
     return Expanded(
       child: CustomScrollView(
         slivers: [
+          // SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: const EdgeInsets.fromLTRB(16.0, 20, 16.0, 0),
+          //     child: DiversityAvatars.s01.image(),
+          //   ),
+          // ),
+
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 20, 16.0, 0),
@@ -28,7 +33,28 @@ class TokenScreen extends StatelessWidget {
               ),
             ),
           ),
+
           ElevationGrid(surfaceTintColor: surfaceTint),
+
+          SliverToBoxAdapter(
+            child: SizedBox.fromSize(
+              // decoration: BoxDecoration(border: Border.all()),
+              size: Size(totalWidth, 36),
+              child: ListView(scrollDirection: Axis.horizontal, children: [
+                for (var element in elevations) ...[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      border: const Border(bottom: BorderSide(width: 2)),
+                    ),
+                    width: element.height,
+                  ),
+                  Container(width: 2, color: Colors.black),
+                ]
+              ]),
+            ),
+          ),
+
           // SliverList(
           //   delegate: SliverChildListDelegate(<Widget>[
           //     const SizedBox(height: 10),
@@ -79,9 +105,19 @@ class ElevationGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final elevationCards = context.space
+    //     .toJson()
+    //     .entries
+    //     .map((item) => ElevationInfo(
+    //         height: item.value as double, key: item.key.toString()))
+    //     .toList()
+    //     .map((elevationInfo) => ElevationCard(info: elevationInfo))
+    //     .toList();
+
     return SliverPadding(
       padding: const EdgeInsets.all(8),
       sliver: SliverLayoutBuilder(builder: (context, constraints) {
+        // return SliverList.list(children: elevationCards);
         return SliverList.list(children: elevationCards(surfaceTintColor));
 
         // if (constraints.crossAxisExtent < narrowScreenWidthThreshold) {
@@ -112,69 +148,26 @@ class ElevationCard extends StatefulWidget {
 class _ElevationCardState extends State<ElevationCard> {
   @override
   Widget build(BuildContext context) {
-    const BorderRadius borderRadius = BorderRadius.all(Radius.circular(4.0));
+    // const BorderRadius borderRadius = BorderRadius.all(Radius.circular(4.0));
 
-    // return ListTile(
-    //   title: Container(
-    //     width: widget.info.height,
-    //     height: 24,
-    //     color: Colors.amber,
-    //     // child: Card(
-    //     //   // borderRadius: borderRadius,
-    //     //   shape: RoundedRectangleBorder(),
-    //     //   elevation: _elevation,
-    //     //   color: color,
-    //     //   shadowColor: widget.shadowColor,
-    //     //   surfaceTintColor: widget.surfaceTint,
-    //     //   // child: SizedBox(width: widget.info.height, height: 24),
-    //     // ),
-    //   ),
-    // );
-
-    final size = Size.square(widget.info.height);
+    final size = Size(widget.info.height, 16);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        // Expanded(child: Text(widget.info.key.toString())),
-        // Text(widget.info.height.toString()),
-        // const SizedBox(width: 24),
-        // const Icon(Icons.circle),
+      child: Row(children: [
         Expanded(child: Text(widget.info.key.toString())),
-        const SizedBox(width: 24),
-
-        Expanded(
-          flex: 2,
-          child: Row(
-            children: [
-              Container(
-                constraints: BoxConstraints.tight(size),
-                // width: widget.info.height,
-                // height: 24,
-                color: Colors.red,
-                // child: Card(
-                //   // borderRadius: borderRadius,
-                //   shape: RoundedRectangleBorder(),
-                //   elevation: _elevation,
-                //   color: color,
-                //   shadowColor: widget.shadowColor,
-                //   surfaceTintColor: widget.surfaceTint,
-                //   // child: SizedBox(width: widget.info.height, height: 24),
-                // ),
-              ),
-            ],
-          ),
-        ),
         Expanded(child: Text(widget.info.height.toString())),
-        Spacer(),
-        Spacer(),
-        Spacer(),
-        Spacer(),
-        Spacer(),
-
-        // Expanded(child: Text(widget.info.height.toString())),
-
-        // const Icon(Icons.circle),
+        const SizedBox(width: 36),
+        Expanded(
+          flex: 15,
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              constraints: BoxConstraints.tight(size),
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              // color: Colors.purple.shade300,
+            ),
+          ]),
+        ),
       ]),
     );
   }
@@ -195,8 +188,8 @@ class ElevationInfo {
 //   ElevationInfo(5, 12.0, 14),
 // ];
 
-final List<ElevationInfo> elevations = Space()
-    .space
+final List<ElevationInfo> elevations = Space.standard()
+    .toJson()
     .entries
     .map((item) => ElevationInfo(height: item.value, key: item.key.toString()))
     .toList();

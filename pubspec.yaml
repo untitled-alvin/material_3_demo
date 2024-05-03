@@ -19,25 +19,22 @@ dependencies:
   url_launcher: ^6.1.8
   web_startup_analyzer:
     git: https://github.com/vitcon-lonton/web_startup_analyzer.git
-  iconify_flutter: ^0.0.5
-  ming_cute_icons: ^0.0.4
-  ficonsax: ^0.0.3
-  flutter_svg: ^1.1.6
+  # iconify_flutter: ^0.0.5
+  standard_ui_kit:
+    path: packages/standard_ui_kit
+  diversity_avatars:
+    path: packages/diversity_avatars
+  bulk_icons:
+    path: packages/bulk_icons
 
 dev_dependencies:
   analysis_defaults:
     git: https://github.com/vitcon-lonton/analysis_defaults.git
-  build_runner: ^2.4.8
-  flutter_gen_runner: ^5.4.0
+  build_runner: ^2.4.9
   flutter_test:
     sdk: flutter
   integration_test:
     sdk: flutter
 
-flutter_gen:
-  output: lib/
-
 flutter:
   uses-material-design: true
-  assets:
-    - assets/DiversityAvatars/

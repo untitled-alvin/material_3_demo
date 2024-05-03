@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:standard_ui_kit/standard_ui_kit.dart';
 
 import 'form.dart';
 import 'form_header.dart';
@@ -89,14 +90,15 @@ class RememberCheckbox extends StatefulWidget {
 class _RememberCheckboxState extends State<RememberCheckbox> {
   bool? _value = false;
 
+  void onChanged(bool? value) {
+    setState(() => _value = value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      Checkbox(
-        value: _value,
-        onChanged: (value) => setState(() => _value = value),
-      ),
-      const SizedBox(width: 4),
+      Checkbox(value: _value, onChanged: onChanged),
+      SizedBox(width: Theme.of(context).space.s1),
       const Text('Remember me'),
     ]);
   }

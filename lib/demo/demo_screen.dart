@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:standard_ui_kit/standard_ui_kit.dart';
 
-import 'demo_theme.dart';
 import 'filter_form.dart';
-import 'icons.dart';
+import 'icons.dart' as ic;
+import 'or_divider.dart';
 import 'settings_form.dart';
-import 'sign_in_divider.dart';
 import 'sign_in_form.dart';
 import 'sign_in_socials.dart';
 
@@ -33,7 +33,7 @@ class DemoList1 extends StatelessWidget {
         ),
       ),
       colDivider,
-      const ComponentDecoration(child: IconsList()),
+      const ComponentDecoration(child: ic.Icons()),
       colDivider,
       const ComponentDecoration(child: SocialsSignIn()),
 
@@ -44,7 +44,7 @@ class DemoList1 extends StatelessWidget {
         colDivider,
         const ComponentDecoration(child: FilterForm()),
         colDivider,
-        const ComponentDecoration(child: SignInDivider()),
+        const ComponentDecoration(child: OrDivider()),
       ],
 
       colDivider,
@@ -90,7 +90,7 @@ class DemoList2 extends StatelessWidget {
       colDivider,
       const ComponentDecoration(child: FilterForm()),
       colDivider,
-      const ComponentDecoration(child: SignInDivider()),
+      const ComponentDecoration(child: OrDivider()),
       colDivider,
     ];
     List<double?> heights = List.filled(children.length, null);

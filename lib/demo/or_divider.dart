@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SignInDivider extends Row {
-  const SignInDivider({super.key});
+class OrDivider extends Row {
+  const OrDivider({super.key});
 
   @override
   List<Widget> get children {

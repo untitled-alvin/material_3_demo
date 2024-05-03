@@ -7,12 +7,10 @@ import 'package:flutter/material.dart';
 import 'color_palettes_screen.dart';
 import 'component_screen.dart';
 import 'constants.dart';
-import 'elevation_screen.dart';
-import 'token/token_screen.dart';
-import 'typography_screen.dart';
-
-// ignore: directives_ordering
 import 'demo/demo_screen.dart';
+import 'demo/token_screen.dart';
+import 'elevation_screen.dart';
+import 'typography_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({
