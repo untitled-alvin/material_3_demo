@@ -1,0 +1,23 @@
+name: standard_ui_kit
+description: Standard UI Kit Flutter package
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: "^3.3.0"
+  flutter: "^3.19.0"
+
+dependencies:
+  ficonsax: ^0.0.3
+  flutter:
+    sdk: flutter
+  ming_cute_icons: ^0.0.5
+  theme_tailor_annotation: ^3.0.1
+
+dev_dependencies:
+  build_runner: ^2.4.9
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.3
+  theme_tailor: ^3.0.1
+  very_good_analysis: ^5.1.0
