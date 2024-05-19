@@ -1,24 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:standard_ui_kit/standard_ui_kit.dart';
+import 'package:value_objects/value_objects.dart';
 
-class VisibilityIconButton extends IconButton {
-  VisibilityIconButton({
+class VisibilityIcon extends Icon {
+  const VisibilityIcon(bool obscure, {super.key})
+      : super(obscure ? StandardIcons.eye_bold : StandardIcons.eye_slash_bold,
+            size: 20);
+}
+
+class ObscureButton extends IconButton {
+  ObscureButton({
+    required bool obscure,
     super.key,
-    required bool visibility,
-    required VoidCallback onPressed,
-  }) : super(
-          onPressed: onPressed,
-          icon: Icon(
-              visibility
-                  ? StandardIcons.eye_bold
-                  : StandardIcons.eye_slash_bold,
-              size: 20),
-        );
-
-  // icon: visibility
-  //     ? Lexicon(StandardIcons.eye_bold, size: 20)
-  //     : Lexicon(StandardIcons.eye_slash_bold, size: 20),
+    super.onPressed,
+  }) : super(icon: VisibilityIcon(obscure));
 }
 
 class InputLabel extends StatelessWidget {
@@ -42,7 +38,16 @@ class MailInput extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return 'Please enter some text';
         }
-        return null;
+
+        return EmailAddress(value).failureOrUnit.fold(
+          (failure) {
+            return switch (failure) {
+              InvalidEmail() => 'Email invalid',
+              _ => 'Email invalid'
+            };
+          },
+          (_) => null,
+        );
       },
       decoration: const InputDecoration(
         prefixIcon: Icon(StandardIcons.sms1_bold, size: 20),
@@ -61,7 +66,7 @@ class PasswordInput extends StatefulWidget {
 }
 
 class _PasswordInputState extends State<PasswordInput> {
-  bool _visibility = true;
+  bool _obscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -70,18 +75,31 @@ class _PasswordInputState extends State<PasswordInput> {
         if (value == null || value.isEmpty) {
           return 'Please enter some text';
         }
-        return null;
+
+        // return Password(value).failureOrUnit.fold((failure) {
+        //   return switch (failure) {
+        //     ShortPassword() => 'ShortPassword',
+        //     NoUpperCase() => 'NoUpperCase',
+        //     NoNumber() => 'NoNumber',
+        //     NoSpecialSymbol() => 'NoSpecialSymbol',
+        //     _ => 'PasswordInvalid'
+        //   };
+        // }, (_) => null);
+
+        return Password(value).failureOrUnit.fold((failure) {
+          return failure.runtimeType.toString();
+        }, (_) => null);
       },
       decoration: InputDecoration(
         hintText: 'Password',
         // filled: true,
         prefixIcon: const Icon(StandardIcons.lock_1_bold, size: 20),
-        suffixIcon: VisibilityIconButton(
-          onPressed: () => setState(() => _visibility = !_visibility),
-          visibility: _visibility,
+        suffixIcon: ObscureButton(
+          onPressed: () => setState(() => _obscure = !_obscure),
+          obscure: _obscure,
         ),
       ),
-      obscureText: _visibility,
+      obscureText: _obscure,
     );
   }
 }
