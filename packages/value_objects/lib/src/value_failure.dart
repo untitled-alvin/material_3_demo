@@ -5,13 +5,6 @@ sealed class ValueFailure<T> {
     required this.failedValue,
   });
 
-  factory ValueFailure.exceedingLength({
-    required T failedValue,
-    required int max,
-  }) {
-    return ExceedingLength(failedValue: failedValue, max: max);
-  }
-
   factory ValueFailure.empty({required T failedValue}) {
     return Empty(failedValue: failedValue);
   }
@@ -20,19 +13,33 @@ sealed class ValueFailure<T> {
     return Multiline(failedValue: failedValue);
   }
 
-  factory ValueFailure.listTooLong({
-    required T failedValue,
-    required int max,
-  }) {
-    return ListTooLong(failedValue: failedValue, max: max);
-  }
-
   factory ValueFailure.invalidEmail({required T failedValue}) {
     return InvalidEmail(failedValue: failedValue);
   }
 
   factory ValueFailure.shortPassword({required T failedValue}) {
     return ShortPassword(failedValue: failedValue);
+  }
+
+  factory ValueFailure.noSpecialSymbol({required T failedValue}) {
+    return NoSpecialSymbol(failedValue: failedValue);
+  }
+
+  factory ValueFailure.noUpperCase({required T failedValue}) {
+    return NoUpperCase(failedValue: failedValue);
+  }
+
+  factory ValueFailure.noNumber({required T failedValue}) {
+    return NoNumber(failedValue: failedValue);
+  }
+
+  factory ValueFailure.exceedingLength(
+      {required T failedValue, required int max}) {
+    return ExceedingLength(failedValue: failedValue, max: max);
+  }
+
+  factory ValueFailure.listTooLong({required T failedValue, required int max}) {
+    return ListTooLong(failedValue: failedValue, max: max);
   }
 
   final T failedValue;
@@ -52,6 +59,18 @@ class InvalidEmail<T> extends ValueFailure<T> {
 
 class ShortPassword<T> extends ValueFailure<T> {
   ShortPassword({required super.failedValue});
+}
+
+class NoSpecialSymbol<T> extends ValueFailure<T> {
+  NoSpecialSymbol({required super.failedValue});
+}
+
+class NoUpperCase<T> extends ValueFailure<T> {
+  NoUpperCase({required super.failedValue});
+}
+
+class NoNumber<T> extends ValueFailure<T> {
+  NoNumber({required super.failedValue});
 }
 
 class ExceedingLength<T> extends ValueFailure<T> {

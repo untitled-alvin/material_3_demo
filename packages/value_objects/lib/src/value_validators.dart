@@ -46,8 +46,11 @@ Either<ValueFailure<List<T>>, List<T>> validateMaxListLength<T>(
 }
 
 Either<ValueFailure<String>, String> validateEmailAddress(String input) {
+  // const emailRegex =
+  //     r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
   const emailRegex =
-      r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
+      r'^[a-zA-Z0-9.a-zA-Z0-9.!#$%&"*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
+
   if (RegExp(emailRegex).hasMatch(input)) {
     return right(input);
   } else {
@@ -56,9 +59,35 @@ Either<ValueFailure<String>, String> validateEmailAddress(String input) {
 }
 
 Either<ValueFailure<String>, String> validatePassword(String input) {
-  if (input.length >= 6) {
-    return right(input);
+  final hasMinLength = input.length > 6;
+  final hasUppercase = input.contains(RegExp('[A-Z]'));
+  final hasDigits = input.contains(RegExp('[0-9]'));
+  final hasSpecialCharacters =
+      input.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+
+  // if (input.length >= 6) {
+//   return right(input);
+// } else {
+//   return left(ValueFailure.shortPassword(failedValue: input));
+// }
+
+  if (!hasMinLength) {
+    return left(
+      ValueFailure.shortPassword(failedValue: input),
+    );
+  } else if (!hasUppercase) {
+    return left(
+      ValueFailure.noUpperCase(failedValue: input),
+    );
+  } else if (!hasDigits) {
+    return left(
+      ValueFailure.noNumber(failedValue: input),
+    );
+  } else if (!hasSpecialCharacters) {
+    return left(
+      ValueFailure.noSpecialSymbol(failedValue: input),
+    );
   } else {
-    return left(ValueFailure.shortPassword(failedValue: input));
+    return right(input);
   }
 }
