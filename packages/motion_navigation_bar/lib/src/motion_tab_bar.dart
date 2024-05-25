@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_asserts_with_message, public_member_api_docs, always_use_package_imports, lines_longer_than_80_chars
+// ignore_for_file: public_member_api_docs, avoid_dynamic_calls, constant_identifier_names, lines_longer_than_80_chars, always_use_package_imports, prefer_asserts_with_message
 
 import 'package:flutter/material.dart';
 
@@ -9,12 +9,8 @@ import 'motion_tab_item.dart';
 
 typedef MotionTabBuilder = Widget Function();
 
-/// {@template motion_navigation_bar}
-/// Motion Navigation Bar Flutter package
-/// {@endtemplate}
-class MotionNavigationBar extends StatefulWidget {
-  /// {@macro motion_navigation_bar}
-  MotionNavigationBar({
+class MotionTabBar extends StatefulWidget {
+  MotionTabBar({
     required this.initialSelectedTab,
     required this.labels,
     this.textStyle,
@@ -64,10 +60,10 @@ class MotionNavigationBar extends StatefulWidget {
   final List<Widget?>? badges;
 
   @override
-  State<MotionNavigationBar> createState() => _MotionNavigationBarState();
+  State<MotionTabBar> createState() => _MotionTabBarState();
 }
 
-class _MotionNavigationBarState extends State<MotionNavigationBar>
+class _MotionTabBarState extends State<MotionTabBar>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Tween<double> _positionTween;
@@ -326,7 +322,6 @@ class _MotionNavigationBarState extends State<MotionNavigationBar>
           setState(() {
             activeIcon = icon;
             selectedTab = tabLabel;
-            // ignore: avoid_dynamic_calls
             widget.onTabItemSelected!(index);
           });
           _initAnimationAndStart(
