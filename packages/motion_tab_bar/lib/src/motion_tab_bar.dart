@@ -187,6 +187,9 @@ class _MotionTabBarState extends State<MotionTabBar>
 
   @override
   Widget build(BuildContext context) {
+    // final fabSize = widget.tabSize! + 10;
+    final fabSize = widget.tabSize! + 12;
+
     return Container(
       decoration: BoxDecoration(
         color: widget.tabBarColor,
@@ -223,16 +226,45 @@ class _MotionTabBarState extends State<MotionTabBar>
                     widthFactor: 1 / tabAmount,
                     child: Stack(
                       alignment: Alignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: widget.tabSize! + 30,
-                          width: widget.tabSize! + 30,
+                      children: [
+                        // SizedBox(
+                        //   height: widget.tabSize! + 30,
+                        //   width: widget.tabSize! + 30,
+                        //   child: ClipRect(
+                        //     clipper: HalfClipper(),
+                        //     child: Center(
+                        //       child: Container(
+                        //         width: widget.tabSize! + 10,
+                        //         height: widget.tabSize! + 10,
+                        //         decoration: BoxDecoration(
+                        //           color: widget.tabBarColor,
+                        //           shape: BoxShape.circle,
+                        //           boxShadow: const [
+                        //             BoxShadow(
+                        //               color: Colors.black12,
+                        //               blurRadius: 8,
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        //
+                        SizedBox.square(
+                          // width: widget.tabSize! + 30,
+                          // height: widget.tabSize! + 30,
+                          dimension: fabSize + 32,
+                          // width: fabSize + 12,
+                          // height: fabSize + 12,
                           child: ClipRect(
                             clipper: HalfClipper(),
                             child: Center(
                               child: Container(
-                                width: widget.tabSize! + 10,
-                                height: widget.tabSize! + 10,
+                                width: fabSize,
+                                height: fabSize,
+                                // height: widget.tabSize! + 10,
+                                // width: widget.tabSize! + 10,
                                 decoration: BoxDecoration(
                                   color: widget.tabBarColor,
                                   shape: BoxShape.circle,
@@ -247,16 +279,19 @@ class _MotionTabBarState extends State<MotionTabBar>
                             ),
                           ),
                         ),
+
+                        //
                         SizedBox(
-                          height: widget.tabSize! + 15,
-                          width: widget.tabSize! + 35,
+                          // height: widget.tabSize! + 15,
+                          // width: widget.tabSize! + 35,
+                          height: widget.tabSize! + 16,
+                          width: widget.tabSize! + 36,
                           child: CustomPaint(
                             painter: HalfPainter(color: widget.tabBarColor),
                           ),
                         ),
-                        SizedBox(
-                          height: widget.tabSize,
-                          width: widget.tabSize,
+                        SizedBox.square(
+                          dimension: widget.tabSize,
                           child: Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
