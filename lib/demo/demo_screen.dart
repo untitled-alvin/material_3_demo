@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_3_demo/settings/settings_form.dart';
 import 'package:material_3_demo/sign_in/sign_in_form.dart';
 import 'package:material_3_demo/sign_in/sign_in_socials.dart';
 import 'package:standard_ui_kit/standard_ui_kit.dart';
@@ -7,7 +8,6 @@ import 'package:standard_ui_kit/standard_ui_kit.dart';
 import 'filter_form.dart';
 import 'icons.dart' as ic;
 import 'or_divider.dart';
-import 'settings_form.dart';
 
 const rowDivider = SizedBox(width: 20);
 const colDivider = SizedBox(height: 10);
