@@ -7,6 +7,13 @@ import 'half_painter.dart';
 import 'motion_tab_bar_controller.dart';
 import 'motion_tab_item.dart';
 
+const indicator = BoxDecoration(
+  // color: widget.tabBarColor,
+  borderRadius: BorderRadius.all(Radius.circular(12)),
+  color: Colors.red,
+  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8)],
+);
+
 typedef MotionTabBuilder = Widget Function();
 
 class MotionTabBar extends StatefulWidget {
@@ -20,8 +27,10 @@ class MotionTabBar extends StatefulWidget {
     this.tabIconSelectedSize = 24,
     this.tabSelectedColor = Colors.black,
     this.tabBarColor = Colors.white,
-    this.tabBarHeight = 65,
-    this.tabSize = 60,
+    this.tabBarHeight = 80,
+    this.tabSize = 64,
+    // this.tabBarHeight = 65,
+    // this.tabSize = 60,
     this.icons,
     this.useSafeArea = true,
     this.badges,
@@ -188,7 +197,8 @@ class _MotionTabBarState extends State<MotionTabBar>
   @override
   Widget build(BuildContext context) {
     // final fabSize = widget.tabSize! + 10;
-    final fabSize = widget.tabSize! + 12;
+    final tabSize = widget.tabSize!;
+    final fabSize = tabSize + 12;
 
     return Container(
       decoration: BoxDecoration(
@@ -284,14 +294,14 @@ class _MotionTabBarState extends State<MotionTabBar>
                         SizedBox(
                           // height: widget.tabSize! + 15,
                           // width: widget.tabSize! + 35,
-                          height: widget.tabSize! + 16,
-                          width: widget.tabSize! + 36,
+                          height: tabSize + 16,
+                          width: tabSize + 36,
                           child: CustomPaint(
                             painter: HalfPainter(color: widget.tabBarColor),
                           ),
                         ),
                         SizedBox.square(
-                          dimension: widget.tabSize,
+                          dimension: tabSize,
                           child: Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -329,6 +339,37 @@ class _MotionTabBarState extends State<MotionTabBar>
                 ),
               ),
             ),
+
+            // Indicator
+            Container(
+              decoration: const BoxDecoration(color: Colors.transparent),
+              child: Align(
+                heightFactor: 0,
+                // alignment: Alignment.topRight,
+                // alignment: Alignment(_positionAnimation.value, 0),
+                alignment: Alignment(
+                  _positionAnimation.value,
+                  // -1.7,
+                  // -8,
+                  // -(widget.tabSize! / 2),
+                  // 20,
+                  // 21.8,
+                  -(widget.tabBarHeight! / 2) + 1,
+                  // -(widget.tabSize! + 4) / 2,
+                ),
+                child: FractionallySizedBox(
+                  widthFactor: 1 / tabAmount,
+                  child: Container(
+                    height: 4,
+                    // width: widget.tabSize,
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Container(decoration: indicator),
+                  ),
+                ),
+              ),
+            ),
+
+            //
           ],
         ),
       ),
