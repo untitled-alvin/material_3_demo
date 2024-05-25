@@ -2,10 +2,18 @@
 
 import 'package:flutter/material.dart';
 
+// const double ICON_OFF = -3;
+// const double ICON_ON = 0;
+// const double TEXT_OFF = 3;
+// const double TEXT_ON = 1;
+// const double ALPHA_OFF = 0;
+// const double ALPHA_ON = 1;
+// const int ANIM_DURATION = 300;
+
 const double ICON_OFF = -3;
-const double ICON_ON = 0;
-const double TEXT_OFF = 3;
-const double TEXT_ON = 1;
+const double ICON_ON = -0.6;
+const double TEXT_OFF = 1.1;
+const double TEXT_ON = 1.1;
 const double ALPHA_OFF = 0;
 const double ALPHA_ON = 1;
 const int ANIM_DURATION = 300;
@@ -75,16 +83,26 @@ class _MotionTabItemState extends State<MotionTabItem> {
               duration: const Duration(milliseconds: ANIM_DURATION),
               alignment: Alignment(0, textYAlign),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: widget.selected
-                    ? Text(
-                        widget.title!,
-                        style: widget.textStyle,
-                        softWrap: false,
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                      )
-                    : const Text(''),
+                padding: const EdgeInsets.all(8),
+                // child: widget.selected
+                //     ? Text(
+                //         widget.title!,
+                //         style: widget.textStyle,
+                //         softWrap: false,
+                //         maxLines: 1,
+                //         textAlign: TextAlign.center,
+                //       )
+                //     : const Text(''),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    widget.title!,
+                    style: widget.textStyle,
+                    softWrap: false,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
             ),
           ),

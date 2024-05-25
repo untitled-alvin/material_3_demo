@@ -22,11 +22,11 @@ class MotionTabBar extends StatefulWidget {
     this.tabBarColor = Colors.white,
     this.tabBarHeight = 65,
     this.tabSize = 60,
-    this.onTabItemSelected,
     this.icons,
     this.useSafeArea = true,
     this.badges,
     this.controller,
+    this.onTabItemSelected,
     super.key,
   })  : assert(labels.contains(initialSelectedTab)),
         assert(icons != null && icons.length == labels.length),
@@ -48,13 +48,13 @@ class MotionTabBar extends StatefulWidget {
   final double? tabSize;
 
   final TextStyle? textStyle;
-  final Function? onTabItemSelected;
   final String initialSelectedTab;
 
   final List<String?> labels;
   final List<IconData>? icons;
   final bool useSafeArea;
   final MotionTabBarController? controller;
+  final void Function(int)? onTabItemSelected;
 
   // badge
   final List<Widget?>? badges;
