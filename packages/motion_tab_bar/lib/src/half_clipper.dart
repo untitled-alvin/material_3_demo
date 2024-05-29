@@ -8,7 +8,7 @@ class HalfClipper extends CustomClipper<Rect> {
   HalfClipper();
 
   @override
-  Rect getClip(Size size) => Rect.fromLTWH(0, 0, size.width, size.height);
+  Rect getClip(Size size) => Rect.fromLTWH(0, 0, size.width, size.height / 2);
 
   @override
   bool shouldReclip(CustomClipper<Rect> oldClipper) => true;

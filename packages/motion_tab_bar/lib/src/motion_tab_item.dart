@@ -22,10 +22,10 @@ class MotionTabItem extends StatefulWidget {
   const MotionTabItem({
     required this.title,
     required this.selected,
-    required this.iconData,
+    required this.icon,
     required this.textStyle,
     required this.tabIconColor,
-    required this.callbackFunction,
+    required this.onPressed,
     this.tabIconSize = 24,
     this.badge,
     super.key,
@@ -33,9 +33,9 @@ class MotionTabItem extends StatefulWidget {
 
   final String? title;
   final bool selected;
-  final IconData? iconData;
+  final Widget? icon;
   final TextStyle textStyle;
-  final Function callbackFunction;
+  final Function onPressed;
   final Color tabIconColor;
   final double? tabIconSize;
   final Widget? badge;
@@ -104,7 +104,7 @@ class _MotionTabItemState extends State<MotionTabItem> {
             ),
           ),
           InkWell(
-            onTap: () => widget.callbackFunction.call(),
+            onTap: () => widget.onPressed.call(),
             child: SizedBox.expand(
               child: AnimatedAlign(
                 duration: const Duration(milliseconds: ANIM_DURATION),
@@ -122,12 +122,10 @@ class _MotionTabItemState extends State<MotionTabItem> {
                         padding: EdgeInsets.zero,
                         // alignment: const Alignment(0, 0),
                         alignment: Alignment.center,
-                        icon: Icon(
-                          widget.iconData,
-                          color: widget.tabIconColor,
-                          size: widget.tabIconSize,
-                        ),
-                        onPressed: () => widget.callbackFunction.call(),
+                        color: widget.tabIconColor,
+                        iconSize: widget.tabIconSize,
+                        icon: widget.icon ?? const SizedBox.shrink(),
+                        onPressed: () => widget.onPressed.call(),
                       ),
                       if (widget.badge != null)
                         Positioned(top: 0, right: 0, child: widget.badge!)

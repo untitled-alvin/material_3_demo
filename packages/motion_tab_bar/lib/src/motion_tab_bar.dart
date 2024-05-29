@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, avoid_dynamic_calls, constant_identifier_names, lines_longer_than_80_chars, always_use_package_imports, prefer_asserts_with_message
+// ignore_for_file: public_member_api_docs, avoid_dynamic_calls, constant_identifier_names, lines_longer_than_80_chars, always_use_package_imports, prefer_asserts_with_message, avoid_bool_literals_in_conditional_expressions
 
 import 'package:flutter/material.dart';
 
@@ -7,11 +7,21 @@ import 'half_painter.dart';
 import 'motion_tab_bar_controller.dart';
 import 'motion_tab_item.dart';
 
-const indicator = BoxDecoration(
+final indicator = BoxDecoration(
   // color: widget.tabBarColor,
-  borderRadius: BorderRadius.all(Radius.circular(12)),
+  borderRadius: const BorderRadius.all(Radius.circular(12)),
   color: Colors.red,
-  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8)],
+  gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Colors.amberAccent.shade200,
+      Colors.amberAccent.shade700,
+    ],
+  ),
+  boxShadow: const [
+    BoxShadow(color: Colors.black12, blurRadius: 8),
+  ],
 );
 
 typedef MotionTabBuilder = Widget Function();
@@ -35,14 +45,11 @@ class MotionTabBar extends StatefulWidget {
     this.useSafeArea = true,
     this.badges,
     this.controller,
-    this.onTabItemSelected,
+    this.onTabSelected,
+    this.shapes,
     super.key,
-  })  :
-        //  assert(labels.contains(initialSelectedTab)),
-        //  assert(labels.contains(initialSelectedTab)),
-        assert(icons != null && icons.length == labels.length),
+  })  : assert(icons != null && icons.length == labels.length),
         assert(
-          // ignore: avoid_bool_literals_in_conditional_expressions
           badges?.isNotEmpty ?? false ? badges!.length == labels.length : true,
         );
 
@@ -61,13 +68,15 @@ class MotionTabBar extends StatefulWidget {
   final int initialIndex;
 
   final List<String?> labels;
-  final List<IconData>? icons;
+  final List<Widget>? icons;
+
   final bool useSafeArea;
   final MotionTabBarController? controller;
-  final void Function(int)? onTabItemSelected;
+  final void Function(int)? onTabSelected;
 
   // badge
   final List<Widget?>? badges;
+  final List<BorderRadius>? shapes;
 
   @override
   State<MotionTabBar> createState() => _MotionTabBarState();
@@ -86,8 +95,9 @@ class _MotionTabBarState extends State<MotionTabBar>
   List<String?> get labels => widget.labels;
   List<Widget?>? get badges => widget.badges;
   bool get isBadgesNotEmpty => badges?.isNotEmpty ?? false;
-  IconData? get activeIcon => widget.icons?[selectedIndex];
+  Widget? get activeIcon => widget.icons?[selectedIndex];
   Widget? get activeBadge => widget.badges?[selectedIndex];
+  BorderRadius? get radius => widget.shapes?[selectedIndex];
   int get tabAmount => labels.length;
 
   // int get tabAmount => widget.icons?.length ?? 0;
@@ -214,14 +224,14 @@ class _MotionTabBarState extends State<MotionTabBar>
                       alignment: Alignment.center,
                       children: [
                         // SizedBox(
-                        //   height: widget.tabSize! + 30,
-                        //   width: widget.tabSize! + 30,
+                        //   height: widget.tabSize + 30,
+                        //   width: widget.tabSize + 30,
                         //   child: ClipRect(
                         //     clipper: HalfClipper(),
                         //     child: Center(
                         //       child: Container(
-                        //         width: widget.tabSize! + 10,
-                        //         height: widget.tabSize! + 10,
+                        //         width: widget.tabSize + 10,
+                        //         height: widget.tabSize + 10,
                         //         decoration: BoxDecoration(
                         //           color: widget.tabBarColor,
                         //           shape: BoxShape.circle,
@@ -236,24 +246,23 @@ class _MotionTabBarState extends State<MotionTabBar>
                         //     ),
                         //   ),
                         // ),
-                        //
+
                         SizedBox.square(
-                          // width: widget.tabSize! + 30,
-                          // height: widget.tabSize! + 30,
                           dimension: fabSize + 32,
-                          // width: fabSize + 12,
-                          // height: fabSize + 12,
+                          // dimension: widget.tabSize! + 30,
                           child: ClipRect(
-                            clipper: HalfClipper(),
+                            // clipper: HalfClipper(),
                             child: Center(
-                              child: Container(
+                              child: AnimatedContainer(
                                 width: fabSize,
                                 height: fabSize,
+                                curve: Curves.fastOutSlowIn,
                                 // height: widget.tabSize! + 10,
                                 // width: widget.tabSize! + 10,
+                                duration: Durations.medium1,
                                 decoration: BoxDecoration(
                                   color: widget.tabBarColor,
-                                  shape: BoxShape.circle,
+                                  borderRadius: radius,
                                   boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black12,
@@ -267,45 +276,49 @@ class _MotionTabBarState extends State<MotionTabBar>
                         ),
 
                         //
-                        SizedBox(
-                          // height: widget.tabSize! + 15,
-                          // width: widget.tabSize! + 35,
-                          height: tabSize + 16,
-                          width: tabSize + 36,
-                          child: CustomPaint(
-                            painter: HalfPainter(color: widget.tabBarColor),
-                          ),
-                        ),
+                        // SizedBox.square(
+                        //   // height: widget.tabSize! + 15,
+                        //   // width: widget.tabSize! + 35,
+                        //   dimension: tabSize + 20,
+                        //   // height: tabSize + 16,
+                        //   // width: tabSize + 36,
+                        //   child: CustomPaint(
+                        //     painter: HalfPainter(color: widget.tabBarColor),
+                        //   ),
+                        // ),
                         SizedBox.square(
                           dimension: tabSize,
-                          child: Container(
+                          child: AnimatedContainer(
+                            duration: Durations.medium1,
+                            padding: EdgeInsets.zero,
+                            curve: Curves.fastOutSlowIn,
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
+                              borderRadius: radius,
                               color: widget.tabSelectedColor,
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.zero,
-                              child: Opacity(
-                                // opacity: 1,
-                                opacity: fabIconAlpha,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Icon(
-                                      activeIcon,
-                                      color: widget.tabIconSelectedColor,
-                                      size: widget.tabIconSelectedSize,
+                            child: Opacity(
+                              opacity: 1,
+                              // opacity: fabIconAlpha,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  if (activeIcon != null)
+                                    IconTheme(
+                                      data: IconThemeData(
+                                        size: widget.tabIconSelectedSize,
+                                        color: widget.tabIconSelectedColor,
+                                      ),
+                                      child: activeIcon!,
                                     ),
-                                    if (activeBadge != null)
-                                      Positioned(
-                                        top: 0,
-                                        right: 0,
-                                        child: activeBadge!,
-                                      )
-                                    else
-                                      const SizedBox.shrink(),
-                                  ],
-                                ),
+
+                                  //
+                                  if (activeBadge != null)
+                                    Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: activeBadge!,
+                                    )
+                                ],
                               ),
                             ),
                           ),
@@ -331,7 +344,7 @@ class _MotionTabBarState extends State<MotionTabBar>
                   // -(widget.tabSize! / 2),
                   // 20,
                   // 21.8,
-                  -(widget.tabBarHeight! / 2) + 1,
+                  -(widget.tabBarHeight / 2) + 1,
                   // -(widget.tabSize! + 4) / 2,
                 ),
                 child: FractionallySizedBox(
@@ -375,16 +388,16 @@ class _MotionTabBarState extends State<MotionTabBar>
 
       return MotionTabItem(
         selected: selectedIndex == index,
-        iconData: icon,
+        icon: icon,
         title: label,
         textStyle: widget.textStyle ?? const TextStyle(color: Colors.black),
         tabIconColor: widget.tabIconColor ?? Colors.black,
         tabIconSize: widget.tabIconSize,
         badge: badge,
-        callbackFunction: () {
+        onPressed: () {
           setState(() {
             selectedIndex = index;
-            widget.onTabItemSelected!(index);
+            widget.onTabSelected!(index);
           });
           _initAnimationAndStart(
             _positionAnimation.value,
