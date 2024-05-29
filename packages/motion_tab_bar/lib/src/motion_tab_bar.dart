@@ -46,6 +46,9 @@ class MotionTabBar extends StatefulWidget {
           badges?.isNotEmpty ?? false ? badges!.length == labels.length : true,
         );
 
+  final double tabBarHeight;
+  final double tabSize;
+
   final Color? tabIconColor;
   final Color? tabIconSelectedColor;
   final Color? tabSelectedColor;
@@ -53,8 +56,6 @@ class MotionTabBar extends StatefulWidget {
 
   final double? tabIconSize;
   final double? tabIconSelectedSize;
-  final double? tabBarHeight;
-  final double? tabSize;
 
   final TextStyle? textStyle;
   final int initialIndex;
@@ -82,31 +83,19 @@ class _MotionTabBarState extends State<MotionTabBar>
   late Animation<double> _fadeFabOutAnimation;
   late Animation<double> _fadeFabInAnimation;
 
-  late List<String?> labels;
-  late Map<int, IconData> icons;
+  List<String?> get labels => widget.labels;
+  List<Widget?>? get badges => widget.badges;
+  bool get isBadgesNotEmpty => badges?.isNotEmpty ?? false;
+  IconData? get activeIcon => widget.icons?[selectedIndex];
+  Widget? get activeBadge => widget.badges?[selectedIndex];
+  int get tabAmount => labels.length;
 
-  bool get isBadgesNotEmpty => widget.badges?.isNotEmpty ?? false;
-  int get tabAmount => icons.keys.length;
+  // int get tabAmount => widget.icons?.length ?? 0;
+  // int get tabAmount => icons.keys.length;
 
-  double fabIconAlpha = 1;
   int selectedIndex = 0;
-  IconData? activeIcon;
-
+  double fabIconAlpha = 1;
   bool isRtl = false;
-  List<Widget>? badges;
-  Widget? activeBadge;
-
-  double getPosition({required bool isRTL}) {
-    final pace = 2 / (labels.length - 1);
-    var position = (pace * selectedIndex) - 1;
-
-    if (isRTL) {
-      // If RTL, reverse the position calculation
-      position = 1 - (pace * selectedIndex);
-    }
-
-    return position;
-  }
 
   @override
   void initState() {
@@ -116,22 +105,12 @@ class _MotionTabBarState extends State<MotionTabBar>
       isRtl = Directionality.of(context).index == 0;
     });
 
-    labels = widget.labels;
-    icons = {
-      for (final label in labels)
-        labels.indexOf(label): widget.icons![labels.indexOf(label)],
-    };
-
-    selectedIndex = 0;
     selectedIndex = widget.initialIndex;
-    activeIcon = icons[selectedIndex];
-    activeBadge = isBadgesNotEmpty ? widget.badges![selectedIndex] : null;
 
     if (widget.controller != null) {
       widget.controller!.onTabChange = (index) {
         setState(() {
           selectedIndex = index;
-          activeIcon = widget.icons![index];
         });
         _initAnimationAndStart(
           _positionAnimation.value,
@@ -168,11 +147,7 @@ class _MotionTabBarState extends State<MotionTabBar>
       })
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
-          setState(() {
-            activeIcon = icons[selectedIndex];
-            activeBadge =
-                isBadgesNotEmpty ? widget.badges![selectedIndex] : null;
-          });
+          setState(() {});
         }
       });
 
@@ -189,9 +164,16 @@ class _MotionTabBarState extends State<MotionTabBar>
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    _fadeOutController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // final fabSize = widget.tabSize! + 10;
-    final tabSize = widget.tabSize!;
+    final tabSize = widget.tabSize;
     final fabSize = tabSize + 12;
 
     return Container(
@@ -304,6 +286,7 @@ class _MotionTabBarState extends State<MotionTabBar>
                             child: Padding(
                               padding: EdgeInsets.zero,
                               child: Opacity(
+                                // opacity: 1,
                                 opacity: fabIconAlpha,
                                 child: Stack(
                                   alignment: Alignment.center,
@@ -320,7 +303,7 @@ class _MotionTabBarState extends State<MotionTabBar>
                                         child: activeBadge!,
                                       )
                                     else
-                                      const SizedBox(),
+                                      const SizedBox.shrink(),
                                   ],
                                 ),
                               ),
@@ -370,13 +353,25 @@ class _MotionTabBarState extends State<MotionTabBar>
     );
   }
 
+  double getPosition({required bool isRTL}) {
+    final pace = 2 / (labels.length - 1);
+    var position = (pace * selectedIndex) - 1;
+
+    if (isRTL) {
+      // If RTL, reverse the position calculation
+      position = 1 - (pace * selectedIndex);
+    }
+
+    return position;
+  }
+
   List<Widget> generateTabItems() {
     final isRtl = Directionality.of(context).index == 0;
 
     return labels.map((label) {
       final index = labels.indexOf(label);
-      final icon = icons[index];
-      final badge = isBadgesNotEmpty ? widget.badges![index] : null;
+      final icon = widget.icons?[index];
+      final badge = isBadgesNotEmpty ? badges![index] : null;
 
       return MotionTabItem(
         selected: selectedIndex == index,
@@ -388,7 +383,6 @@ class _MotionTabBarState extends State<MotionTabBar>
         badge: badge,
         callbackFunction: () {
           setState(() {
-            activeIcon = icon;
             selectedIndex = index;
             widget.onTabItemSelected!(index);
           });
