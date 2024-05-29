@@ -138,7 +138,7 @@ class _MotionTabItemState extends State<MotionTabItem> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
